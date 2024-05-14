@@ -1,26 +1,21 @@
-name: Node.js CI
+name: ci-cd pipline
 
-on: 
-  push:
-    branches: [ master ]
+on: [push]
+  
 jobs:
- build:
-   runs-on: ubuntu-latest
+  build-express-login-logout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies 
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - run: npm ci
 
-   strategy:
-     matrix:
-       node-version: [20.x]
+      - name: Start server
+        run: npm start & sleep 5
 
-   steps:
-   - uses: actions/checkout@v3
-   - name: Set up Node.js ${{ matrix.node-node-version }}
-     uses: actions/setup-node@v3
-     with:
-       node-version: ${{ matrix.node-version }}
-       cache: 'npm'
-   - name: Install dependencies 
-     run: npm install
-   - name: Run tests
-     run: npm test
-   - name: Start server
-     run: npm start & 
+      - name: Run tests
+        run: npm test & sleep 5
+

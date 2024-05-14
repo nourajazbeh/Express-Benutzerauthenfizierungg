@@ -3,6 +3,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 
 const app = express();
+const port = 3000;
 
 app.use(session({
   secret: 'geheimnisvollesGeheimnis',
@@ -44,7 +45,6 @@ app.get('/protected', authenticate, (req, res) => {
   res.send('Protected route');
 });
 
-const port = 3000;
 app.listen(port, () => {
   console.log(`Server läuft auf Port ${port}`);
 });
